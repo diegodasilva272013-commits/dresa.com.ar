@@ -177,3 +177,16 @@ body::after {
 .dresa-portal[data-gp-motion=on] [data-gp-content] { min-height: 24svh !important; padding: 0 !important; background: transparent !important; }
 
 @keyframes slidein { from { transform: translateX(100%); } to { transform: none; } }
+
+/* Video completo del hero: horizontal = cubre; vertical (celular) = ancho extra para que el logo entre entero */
+.dresa-scrub { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dresa-scrub-bg { display: none; opacity: .55; }
+@media (max-aspect-ratio: 1/1) {
+  .dresa-scrub-bg { display: block; }
+  .dresa-scrub {
+    inset: auto; left: 50%; top: 50%; width: 190vw; height: calc(190vw * 9 / 16); object-fit: fill;
+    transform: translate(-50%, -50%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 62% at 50% 50%, #000 62%, transparent 100%);
+    mask-image: radial-gradient(ellipse 60% 62% at 50% 50%, #000 62%, transparent 100%);
+  }
+}

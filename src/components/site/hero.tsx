@@ -31,11 +31,16 @@ function PortalScene({ idleRef, scrubRef }: { idleRef: RefObject<HTMLVideoElemen
             autoPlay muted loop playsInline preload="auto"
             onError={() => setVideo(false)} aria-hidden="true"
           />
-          <video
-            ref={scrubRef} className="absolute inset-0 size-full object-cover"
-            src="/media/hero-scrub.mp4" style={{ opacity: 0, filter: "brightness(1.1) contrast(1.05)" }}
-            muted playsInline preload="auto" aria-hidden="true"
-          />
+          {/* Video completo: en vertical (celular) se escala para que el logo entre entero */}
+          <div className="absolute inset-0" style={{ opacity: 0 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/media/marble-a.jpg" alt="" className="dresa-scrub-bg absolute inset-0 size-full object-cover" />
+            <video
+              ref={scrubRef} className="dresa-scrub"
+              src="/media/hero-scrub.mp4" style={{ filter: "brightness(1.1) contrast(1.05)" }}
+              muted playsInline preload="auto" aria-hidden="true"
+            />
+          </div>
         </>
       )}
     </div>
@@ -92,7 +97,7 @@ export function Hero() {
     const idle = idleRef.current, scrub = scrubRef.current;
     if (!idle || !scrub) return;
     const smooth = (a: number, b: number, n: number) => { const t = Math.min(1, Math.max(0, (n - a) / (b - a))); return t * t * (3 - 2 * t); };
-    scrub.style.opacity = String(smooth(0.06, 0.36, p));
+    (scrub.parentElement as HTMLElement).style.opacity = String(smooth(0.06, 0.36, p));
     if (p > 0.5) { if (!idle.paused) idle.pause(); } else if (idle.paused) idle.play().catch(() => {});
     if (scrub.readyState >= 1 && scrub.duration) {
       const target = Math.min(scrub.duration - 0.05, scrub.duration * smooth(0.04, 0.8, p));
