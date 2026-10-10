@@ -139,7 +139,7 @@ body::after {
 }
 
 /* ---------- Portal del hero (GlyphPortal) ---------- */
-.dresa-portal { --gp-paper: transparent; --gp-ink: var(--gold-300); --gp-field: #1c0f2b; --gp-foreground: var(--cream); background: transparent !important; }
+.dresa-portal { --gp-paper: var(--ink-950); --gp-ink: var(--gold-300); --gp-field: #1c0f2b; --gp-foreground: var(--cream); background: var(--ink-950); }
 .dresa-portal [data-gp-caption] { inset: calc(var(--gp-word-bottom, 50%) + 118px) 24px auto; justify-content: center; }
 .dresa-portal [data-gp-hint] { display: none; }
 .dresa-portal [data-gp-enter] {
@@ -173,11 +173,7 @@ body::after {
 }
 .ease-lux { transition-timing-function: cubic-bezier(.32,.72,0,1); }
 
-/* Hero: la cortina de bienvenida sube sobre la escena sin dejar pantalla vacía */
-.dresa-portal[data-gp-motion=on] [data-gp-content] {
-  opacity: 1 !important; pointer-events: auto !important;
-  background: linear-gradient(180deg, transparent 0, rgba(10,7,9,.78) 18%, var(--ink-950) 42%) !important;
-  padding-top: clamp(6rem, 22svh, 14rem) !important; padding-bottom: 5rem !important;
-}
+/* Hero: al entrar el video queda libre, sin cortinas ni texto encima */
+.dresa-portal[data-gp-motion=on] [data-gp-content] { min-height: 24svh !important; padding: 0 !important; background: transparent !important; }
 
 @keyframes slidein { from { transform: translateX(100%); } to { transform: none; } }

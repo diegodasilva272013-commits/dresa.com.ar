@@ -21,13 +21,13 @@ export const services = [
 ] as const;
 
 export const accesos = [
-  { id: "registro", label: "Regístrese ya" },
-  { id: "recomendar", label: "Recomendar ya" },
-  { id: "red", label: "Controle su red" },
-  { id: "carrito", label: "Carrito de compras" },
-  { id: "billetera", label: "Billetera virtual" },
-  { id: "testimonios", label: "Testimonio" },
-  { id: "atencion", label: "Atención al cliente" },
+  { id: "registro", label: "Regístrese ya", desc: "Creá tu cuenta" },
+  { id: "recomendar", label: "Recomendar ya", desc: "Compartí tu enlace" },
+  { id: "red", label: "Controle su red", desc: "Mirá cómo crece" },
+  { id: "carrito", label: "Carrito de compras", desc: "Tus productos" },
+  { id: "billetera", label: "Billetera virtual", desc: "Saldo y pagos" },
+  { id: "testimonios", label: "Testimonio", desc: "Lo que dicen" },
+  { id: "atencion", label: "Atención al cliente", desc: "Escribinos" },
 ] as const;
 
 export const waLink = (text: string) =>

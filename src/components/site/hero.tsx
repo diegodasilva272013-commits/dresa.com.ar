@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ArrowUpRight, Menu } from "lucide-react";
+import { useEffect, useRef, useState, type RefObject } from "react";
+import { Menu } from "lucide-react";
 import { Cinzel } from "next/font/google";
 import GlyphPortal from "@/components/ui/glyph-portal";
 import { accesos, site } from "@/lib/site";
@@ -12,30 +12,31 @@ const WORD = "DRESA";
 const FALLBACK = '"Times New Roman", serif';
 
 /** Escena que se ve a través de las letras: aurora amatista + oro, con video opcional encima. */
-function PortalScene() {
+/**
+ * Dentro de las letras corre un tramo del video en loop. Al hacer scroll, el video completo
+ * se va revelando (sincronizado con el scroll) hasta mostrar el logo entero a pantalla completa.
+ */
+function PortalScene({ idleRef, scrubRef }: { idleRef: RefObject<HTMLVideoElement | null>; scrubRef: RefObject<HTMLVideoElement | null> }) {
   const [video, setVideo] = useState(true);
   return (
-    <div
-      style={{ position: "absolute", inset: 0, transform: "scale(var(--gp-field-scale,1))", overflow: "hidden", background: "#1a1020" }}
-    >
+    <div style={{ position: "absolute", inset: 0, transform: "scale(var(--gp-field-scale,1))", overflow: "hidden", background: "#120a18" }}>
       {/* Respaldo si el video no carga: degradé de marca */}
-      <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, #b8946a 0%, #6f3a9f 60%, #2a1245 100%)" }} />
+      <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, #d9b98a 0%, #b58ae0 55%, #6f3a9f 100%)" }} />
       {video && (
-        <video
-          className="absolute inset-0 size-full object-cover"
-          src="/media/hero-loop.mp4" poster="/media/poster.jpg"
-          style={{ filter: "brightness(1.6) contrast(1.05)" }}
-          autoPlay muted loop playsInline preload="auto"
-          onError={() => setVideo(false)}
-          aria-hidden="true"
-        />
-      )}
-      {/* Piso de luz: evita que las letras se pierdan en los momentos oscuros del video, sin teñirlo */}
-      {video && (
-        <div
-          className="absolute inset-0"
-          style={{ mixBlendMode: "lighten", opacity: "calc(1 - (var(--gp-field-scale, 1) - 1) * 6.5)", background: "linear-gradient(135deg, #d9b98a 0%, #b58ae0 55%, #7a4cb8 100%)" }}
-        />
+        <>
+          <video
+            ref={idleRef} className="absolute inset-0 size-full object-cover"
+            src="/media/hero-loop.mp4" poster="/media/poster.jpg"
+            style={{ filter: "brightness(2.4) contrast(1.15) saturate(1.15)" }}
+            autoPlay muted loop playsInline preload="auto"
+            onError={() => setVideo(false)} aria-hidden="true"
+          />
+          <video
+            ref={scrubRef} className="absolute inset-0 size-full object-cover"
+            src="/media/hero-scrub.mp4" style={{ opacity: 0, filter: "brightness(1.1) contrast(1.05)" }}
+            muted playsInline preload="auto" aria-hidden="true"
+          />
+        </>
       )}
     </div>
   );
@@ -83,6 +84,21 @@ function Front() {
 
 export function Hero() {
   const [family, setFamily] = useState<string | null>(null);
+  const idleRef = useRef<HTMLVideoElement>(null);
+  const scrubRef = useRef<HTMLVideoElement>(null);
+
+  // Sin estado de React: se mueve el video directamente en cada frame de scroll.
+  const onProgress = (p: number) => {
+    const idle = idleRef.current, scrub = scrubRef.current;
+    if (!idle || !scrub) return;
+    const smooth = (a: number, b: number, n: number) => { const t = Math.min(1, Math.max(0, (n - a) / (b - a))); return t * t * (3 - 2 * t); };
+    scrub.style.opacity = String(smooth(0.06, 0.36, p));
+    if (p > 0.5) { if (!idle.paused) idle.pause(); } else if (idle.paused) idle.play().catch(() => {});
+    if (scrub.readyState >= 1 && scrub.duration) {
+      const target = Math.min(scrub.duration - 0.05, scrub.duration * smooth(0.04, 0.8, p));
+      if (Math.abs(scrub.currentTime - target) > 0.03) scrub.currentTime = target;
+    }
+  };
 
   useEffect(() => {
     let done = false;
@@ -106,62 +122,26 @@ export function Hero() {
   }
 
   return (
-    <div id="top" className="relative">
-      {/* Video de marca a pantalla completa, fijo mientras dura el portal */}
-      <div aria-hidden className="pointer-events-none sticky top-0 z-0 -mb-[100svh] h-[100svh] overflow-hidden bg-ink-950">
-        <video
-          className="size-full object-cover"
-          src="/media/hero-loop.mp4" poster="/media/poster.jpg"
-          style={{ filter: "brightness(1.05) contrast(1.05)" }}
-          autoPlay muted loop playsInline preload="auto"
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(10,7,9,0)_35%,rgba(10,7,9,.55)_100%)]" />
-      </div>
-      <div className="relative z-10">
+    <div id="top">
       <GlyphPortal
         className="dresa-portal"
         word={WORD}
         fontFamily={family}
         fontWeight={700}
-        scrollLength={2}
+        scrollLength={2.2}
         interactive
         enterLabel="Entrar"
-        background={<PortalScene />}
+        background={<PortalScene idleRef={idleRef} scrubRef={scrubRef} />}
+        onProgress={onProgress}
         front={<Front />}
       >
         <Welcome />
       </GlyphPortal>
-      </div>
     </div>
   );
 }
 
+/** Al entrar, el video queda libre a pantalla completa: sin texto encima. */
 function Welcome() {
-  return (
-    <div className="mx-auto w-full max-w-6xl text-center">
-      <p className="pill relative">Bienvenida</p>
-      <h2 className="h-display relative mx-auto mt-7 max-w-4xl pb-1">
-        Tu mejor versión, <em className="text-gold">sin salir de casa.</em>
-      </h2>
-      <div className="relative mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-gold-500/25 bg-gold-500/20 lg:grid-cols-4">
-        {accesos.map((a, i) => (
-          <a
-            key={a.id}
-            href={`#${a.id}`}
-            className="group relative flex min-h-32 items-end justify-between gap-2 bg-ink-950/75 p-5 backdrop-blur-md transition-colors hover:bg-violet-800/60 sm:min-h-36"
-          >
-            <span className="absolute right-4 top-4 font-caps text-[.65rem] tracking-widest text-violet-400">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <span className="font-display text-[1.15rem] leading-[1.1] text-cream [overflow-wrap:normal] sm:text-[1.7rem]">{a.label}</span>
-            <ArrowUpRight className="size-5 shrink-0 text-gold-400 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-          </a>
-        ))}
-        <a href="#servicios" className="group flex min-h-28 items-end justify-between bg-gold-400/90 p-5 text-ink-950 transition-colors hover:bg-gold-300 sm:min-h-36">
-          <span className="font-display text-[1.15rem] leading-[1.1] [overflow-wrap:normal] sm:text-[1.7rem]">Ver los 10 servicios</span>
-          <ArrowUpRight className="size-5 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-        </a>
-      </div>
-    </div>
-  );
+  return <div aria-hidden />;
 }

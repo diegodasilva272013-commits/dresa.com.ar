@@ -1,6 +1,7 @@
 import { Hero } from "@/components/site/hero";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { Accesos } from "@/components/sections/accesos";
 import { Manifiesto } from "@/components/sections/manifiesto";
 import { Servicios } from "@/components/sections/servicios";
 import { Registro } from "@/components/sections/registro";
@@ -17,6 +18,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <Accesos />
         <Manifiesto />
         <Servicios />
         <Registro />
