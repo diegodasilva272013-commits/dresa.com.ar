@@ -18,6 +18,13 @@ const FALLBACK = '"Times New Roman", serif';
  */
 function PortalScene({ idleRef, scrubRef }: { idleRef: RefObject<HTMLVideoElement | null>; scrubRef: RefObject<HTMLVideoElement | null> }) {
   const [video, setVideo] = useState(true);
+  useEffect(() => {
+    const v = scrubRef.current;
+    if (!v) return;
+    const portrait = window.matchMedia("(max-aspect-ratio: 1/1)").matches;
+    v.src = portrait ? "/media/hero-scrub-vertical.mp4" : "/media/hero-scrub.mp4";
+    v.load();
+  }, [scrubRef, video]);
   return (
     <div style={{ position: "absolute", inset: 0, transform: "scale(var(--gp-field-scale,1))", overflow: "hidden", background: "#120a18" }}>
       {/* Respaldo si el video no carga: degradé de marca */}
@@ -31,13 +38,11 @@ function PortalScene({ idleRef, scrubRef }: { idleRef: RefObject<HTMLVideoElemen
             autoPlay muted loop playsInline preload="auto"
             onError={() => setVideo(false)} aria-hidden="true"
           />
-          {/* Video completo: en vertical (celular) se escala para que el logo entre entero */}
+          {/* Video completo: versión vertical en celular (logo entero, mismo fondo), horizontal en escritorio */}
           <div className="absolute inset-0" style={{ opacity: 0 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/media/marble-a.jpg" alt="" className="dresa-scrub-bg absolute inset-0 size-full object-cover" />
             <video
               ref={scrubRef} className="dresa-scrub"
-              src="/media/hero-scrub.mp4" style={{ filter: "brightness(1.1) contrast(1.05)" }}
+              style={{ filter: "brightness(1.1) contrast(1.05)" }}
               muted playsInline preload="auto" aria-hidden="true"
             />
           </div>
