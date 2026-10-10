@@ -14,7 +14,11 @@ const cormorant = Cormorant_Garamond({
 const jost = Jost({ variable: "--font-jost", subsets: ["latin"], weight: ["300", "400", "500"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  // En Vercel usa el dominio de producción (el propio .vercel.app hasta que dresa.com.ar apunte acá).
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ??
+      (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : site.url),
+  ),
   title: { default: "DRESA · Belleza y estilo a domicilio", template: "%s · DRESA" },
   description: site.tagline,
   applicationName: "DRESA",
@@ -24,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "DRESA · Belleza y estilo a domicilio",
     description: site.tagline,
-    url: site.url,
+    url: "/",
     siteName: "DRESA",
     locale: "es_AR",
     type: "website",
