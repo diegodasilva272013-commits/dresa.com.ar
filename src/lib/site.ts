@@ -3,8 +3,8 @@ export const site = {
   domain: "dresa.com.ar",
   url: "https://www.dresa.com.ar",
   tagline: "Elevamos tu imagen y tu belleza a otro nivel, en tu domicilio.",
-  // Reemplazar por el número real (formato internacional, sin + ni espacios).
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP ?? "5490000000000",
+  // WhatsApp de DRESA (formato internacional, sin + ni espacios). Se puede cambiar con NEXT_PUBLIC_WHATSAPP.
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP ?? "5491164795516",
 };
 
 export const services = [

@@ -24,7 +24,7 @@ function PortalScene() {
         <video
           className="absolute inset-0 size-full object-cover"
           src="/media/hero-loop.mp4" poster="/media/poster.jpg"
-          style={{ filter: "brightness(1.45) contrast(1.05)" }}
+          style={{ filter: "brightness(1.6) contrast(1.05)" }}
           autoPlay muted loop playsInline preload="auto"
           onError={() => setVideo(false)}
           aria-hidden="true"
@@ -34,7 +34,7 @@ function PortalScene() {
       {video && (
         <div
           className="absolute inset-0"
-          style={{ mixBlendMode: "lighten", background: "linear-gradient(135deg, #6b5238 0%, #50367a 60%, #3a2354 100%)" }}
+          style={{ mixBlendMode: "lighten", opacity: "calc(1 - (var(--gp-field-scale, 1) - 1) * 6.5)", background: "linear-gradient(135deg, #d9b98a 0%, #b58ae0 55%, #7a4cb8 100%)" }}
         />
       )}
     </div>
@@ -106,7 +106,18 @@ export function Hero() {
   }
 
   return (
-    <div id="top">
+    <div id="top" className="relative">
+      {/* Video de marca a pantalla completa, fijo mientras dura el portal */}
+      <div aria-hidden className="pointer-events-none sticky top-0 z-0 -mb-[100svh] h-[100svh] overflow-hidden bg-ink-950">
+        <video
+          className="size-full object-cover"
+          src="/media/hero-loop.mp4" poster="/media/poster.jpg"
+          style={{ filter: "brightness(1.05) contrast(1.05)" }}
+          autoPlay muted loop playsInline preload="auto"
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(10,7,9,0)_35%,rgba(10,7,9,.55)_100%)]" />
+      </div>
+      <div className="relative z-10">
       <GlyphPortal
         className="dresa-portal"
         word={WORD}
@@ -120,6 +131,7 @@ export function Hero() {
       >
         <Welcome />
       </GlyphPortal>
+      </div>
     </div>
   );
 }
@@ -141,12 +153,12 @@ function Welcome() {
             <span className="absolute right-4 top-4 font-caps text-[.65rem] tracking-widest text-violet-400">
               {String(i + 1).padStart(2, "0")}
             </span>
-            <span className="font-display text-[1.35rem] leading-none text-cream sm:text-[1.7rem]">{a.label}</span>
+            <span className="font-display text-[1.15rem] leading-[1.1] text-cream [overflow-wrap:normal] sm:text-[1.7rem]">{a.label}</span>
             <ArrowUpRight className="size-5 shrink-0 text-gold-400 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
           </a>
         ))}
         <a href="#servicios" className="group flex min-h-28 items-end justify-between bg-gold-400/90 p-5 text-ink-950 transition-colors hover:bg-gold-300 sm:min-h-36">
-          <span className="font-display text-[1.35rem] leading-none sm:text-[1.7rem]">Ver los 10 servicios</span>
+          <span className="font-display text-[1.15rem] leading-[1.1] [overflow-wrap:normal] sm:text-[1.7rem]">Ver los 10 servicios</span>
           <ArrowUpRight className="size-5 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
         </a>
       </div>

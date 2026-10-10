@@ -139,7 +139,7 @@ body::after {
 }
 
 /* ---------- Portal del hero (GlyphPortal) ---------- */
-.dresa-portal { --gp-paper: var(--ink-950); --gp-ink: var(--gold-300); --gp-field: #1c0f2b; --gp-foreground: var(--cream); background: var(--ink-950); }
+.dresa-portal { --gp-paper: transparent; --gp-ink: var(--gold-300); --gp-field: #1c0f2b; --gp-foreground: var(--cream); background: transparent !important; }
 .dresa-portal [data-gp-caption] { inset: calc(var(--gp-word-bottom, 50%) + 118px) 24px auto; justify-content: center; }
 .dresa-portal [data-gp-hint] { display: none; }
 .dresa-portal [data-gp-enter] {
