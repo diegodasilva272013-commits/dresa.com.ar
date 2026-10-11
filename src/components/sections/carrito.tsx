@@ -8,10 +8,10 @@ import { waLink } from "@/lib/site";
 
 // Catálogo de muestra: reemplazar por los productos reales.
 const products = [
-  { id: "serum", name: "Sérum Iluminador", note: "Vitamina C · 30 ml", price: 48900, hue: ["#d5b384", "#8f6f4c"] },
-  { id: "mascara", name: "Máscara Capilar Nutritiva", note: "Karité y argán · 250 ml", price: 36500, hue: ["#b27fe2", "#6f3a9f"] },
-  { id: "aceite", name: "Aceite de Argán Puro", note: "Brillo y reparación · 60 ml", price: 29900, hue: ["#f3e5c8", "#b8946a"] },
-  { id: "brochas", name: "Set de Brochas Atelier", note: "12 piezas · estuche", price: 54200, hue: ["#d3aaf2", "#4a2470"] },
+  { id: "serum", name: "Sérum Iluminador", note: "Vitamina C · 30 ml", price: 48900 },
+  { id: "mascara", name: "Máscara Capilar Nutritiva", note: "Karité y argán · 250 ml", price: 36500 },
+  { id: "aceite", name: "Aceite de Argán Puro", note: "Brillo y reparación · 60 ml", price: 29900 },
+  { id: "brochas", name: "Set de Brochas Atelier", note: "11 piezas · estuche", price: 54200 },
 ];
 const money = (n: number) => n.toLocaleString("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 });
 
@@ -40,15 +40,10 @@ export function Carrito() {
         <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
           {products.map((p) => (
             <article key={p.id} className="rise group"><Bezel className="h-full" inner="flex h-full flex-col">
-              <div className="relative grid aspect-[4/5] place-items-center overflow-hidden" style={{ background: `radial-gradient(circle at 50% 35%, ${p.hue[0]}33, transparent 62%), #120b13` }}>
-                {/* Frasco dibujado con CSS */}
-                <div className="relative transition-transform duration-700 group-hover:-translate-y-2 group-hover:rotate-3">
-                  <div className="mx-auto h-7 w-9 rounded-t-md" style={{ background: `linear-gradient(90deg, ${p.hue[1]}, ${p.hue[0]}, ${p.hue[1]})` }} />
-                  <div className="mx-auto h-3 w-5 -mt-px bg-ink-700" />
-                  <div className="h-40 w-24 rounded-[1.1rem] border border-white/20" style={{ background: `linear-gradient(115deg, ${p.hue[0]}cc, ${p.hue[1]}ee 60%, ${p.hue[0]}99)`, boxShadow: `0 30px 60px -20px ${p.hue[1]}` }}>
-                    <div className="mx-auto mt-14 w-14 text-center font-caps text-[.5rem] tracking-[.25em] text-ink-950/80">DRESA</div>
-                  </div>
-                </div>
+              <div className="m-1.5 overflow-hidden rounded-[calc(2rem-.375rem-.375rem)]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`/products/${p.id}.webp`} alt={p.name} width={800} height={800} loading="lazy" decoding="async"
+                  className="aspect-square w-full object-cover transition-transform duration-[900ms] ease-lux group-hover:scale-[1.05]" />
               </div>
               <div className="mt-auto p-4 sm:p-5">
                 <h3 className="font-display text-xl leading-tight sm:text-2xl">{p.name}</h3>
@@ -81,7 +76,8 @@ export function Carrito() {
             {items.length === 0 && <li className="py-16 text-center text-cream/50">Todavía no agregaste productos.</li>}
             {items.map((p) => (
               <li key={p.id} className="flex items-center gap-4 rounded-2xl border border-gold-500/20 p-3">
-                <span className="size-14 shrink-0 rounded-xl" style={{ background: `linear-gradient(135deg, ${p.hue[0]}, ${p.hue[1]})` }} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`/products/${p.id}.webp`} alt="" width={56} height={56} className="size-14 shrink-0 rounded-xl object-cover" />
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-display text-xl">{p.name}</p>
                   <p className="text-sm text-gold-200">{money(p.price * cart[p.id])}</p>
