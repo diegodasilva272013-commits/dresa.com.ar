@@ -4,6 +4,8 @@ export const site = {
   url: "https://www.dresa.com.ar",
   tagline: "Elevamos tu imagen y tu belleza a otro nivel, en tu domicilio.",
   // WhatsApp de DRESA (formato internacional, sin + ni espacios). Se puede cambiar con NEXT_PUBLIC_WHATSAPP.
+  // Agente de voz de ElevenLabs (ID público del agente).
+  agentId: process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ?? "agent_7301m4ngkkc4eh6bgthw0zd0adjj",
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP ?? "5491164795516",
 };
 

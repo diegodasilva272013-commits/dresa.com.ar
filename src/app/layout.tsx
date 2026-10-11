@@ -3,6 +3,8 @@ import { Cinzel, Cormorant_Garamond, Jost } from "next/font/google";
 import "./globals.css";
 import { site } from "@/lib/site";
 import { PwaRegister } from "@/components/site/pwa-register";
+import { WhatsappFab } from "@/components/site/whatsapp-fab";
+import { VoiceAgent } from "@/components/site/voice-agent";
 
 const cinzel = Cinzel({ variable: "--font-cinzel", subsets: ["latin"], weight: ["400", "700"] });
 const cormorant = Cormorant_Garamond({
@@ -49,6 +51,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es-AR" className={`${cinzel.variable} ${cormorant.variable} ${jost.variable}`}>
       <body>
         {children}
+        <WhatsappFab />
+        <VoiceAgent />
         <PwaRegister />
       </body>
     </html>

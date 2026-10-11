@@ -85,7 +85,7 @@ function Front() {
         style={{ top: "calc(var(--gp-word-bottom, 50%) + 26px)" }}>
         {site.tagline}
       </p>
-      <p className="absolute inset-x-6 bottom-[max(1.5rem,env(safe-area-inset-bottom))] [@media(any-pointer:coarse)]:bottom-24 flex items-center justify-center gap-3 text-center text-[.65rem] uppercase tracking-[.3em] text-gold-400/80">
+      <p className="absolute inset-x-6 bottom-[max(1.5rem,env(safe-area-inset-bottom))] [@media(any-pointer:coarse)]:bottom-[10.5rem] flex items-center justify-center gap-3 text-center text-[.65rem] uppercase tracking-[.3em] text-gold-400/80">
         <span className="h-px w-8 bg-gold-500/50" /> Deslizá para entrar <span className="h-px w-8 bg-gold-500/50" />
       </p>
     </>

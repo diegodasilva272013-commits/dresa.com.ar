@@ -71,8 +71,8 @@ export function PwaRegister() {
     <div
       role="dialog"
       aria-label="Instalar DRESA"
-      className="fixed inset-x-3 z-[90] flex items-center gap-4 rounded-[1.4rem] border border-gold-500/30 bg-ink-900/95 p-3.5 shadow-[0_20px_60px_-20px_rgba(0,0,0,.9)] sm:left-auto sm:right-5 sm:w-[26rem]"
-      style={{ bottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+      className="fixed inset-x-3 z-[90] flex items-center gap-4 rounded-[1.4rem] border border-gold-500/30 bg-ink-900/95 p-3.5 shadow-[0_20px_60px_-20px_rgba(0,0,0,.9)] sm:right-auto sm:left-5 sm:w-[26rem]"
+      style={{ bottom: "max(5.5rem, calc(4.75rem + env(safe-area-inset-bottom)))" }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/icons/icon-192.png" alt="" width={48} height={48} className="size-12 rounded-xl" />
