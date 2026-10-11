@@ -13,9 +13,9 @@ function codeFrom(name: string) {
 }
 
 const steps = [
-  { t: "Ingresá tu nombre", d: "Generamos tu código personal al instante." },
-  { t: "Compartí tu enlace", d: "Por WhatsApp o donde prefieras." },
-  { t: "Sumá a tu red", d: "Cada persona que se registra queda en tu red." },
+  { t: "Ingresá tu nombre", d: "Generamos tu código personal al instante.", img: "paso-1", alt: "Dos amigas mirando un celular" },
+  { t: "Compartí tu enlace", d: "Por WhatsApp o donde prefieras.", img: "paso-2", alt: "Mujer enviando un mensaje desde su sillón" },
+  { t: "Sumá a tu red", d: "Cada persona que se registra queda en tu red.", img: "paso-3", alt: "Amigos brindando juntos" },
 ];
 
 export function Recomendar() {
@@ -42,10 +42,16 @@ export function Recomendar() {
       <ol className="mt-16 grid gap-4 sm:mt-20 md:grid-cols-3 md:gap-6">
         {steps.map((s, i) => (
           <li key={s.t} className="rise">
-            <Bezel className="h-full" inner="flex flex-col items-center px-6 py-10 text-center">
-              <span className="font-display text-7xl leading-none text-gold">{i + 1}</span>
-              <p className="mt-5 font-display text-2xl text-cream">{s.t}</p>
-              <p className="mt-2 max-w-[18rem] text-sm text-cream/60">{s.d}</p>
+            <Bezel className="h-full" inner="flex h-full flex-col">
+              <div className="relative m-1.5 overflow-hidden rounded-[calc(2rem-.375rem-.375rem)]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`/services/${s.img}.webp`} alt={s.alt} width={720} height={720} loading="lazy" decoding="async" className="aspect-square w-full object-cover" />
+              </div>
+              <div className="px-6 pb-8 pt-5 text-center">
+                <span className="font-display text-5xl leading-none text-gold">{i + 1}</span>
+                <p className="mt-3 font-display text-2xl text-cream">{s.t}</p>
+                <p className="mx-auto mt-2 max-w-[18rem] text-sm text-cream/65">{s.d}</p>
+              </div>
             </Bezel>
           </li>
         ))}
