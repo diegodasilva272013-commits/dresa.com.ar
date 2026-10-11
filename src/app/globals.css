@@ -149,7 +149,7 @@ body::after {
   transition: transform .3s, box-shadow .3s;
 }
 .dresa-portal [data-gp-enter]:hover { transform: translateY(-2px); }
-.dresa-portal [data-gp-touch-picker] { top: auto; bottom: 88px; }
+.dresa-portal [data-gp-touch-picker] { top: auto; bottom: max(22px, calc(env(safe-area-inset-bottom) + 6px)); }
 .dresa-portal [data-gp-select] { background: rgba(255,255,255,.06); border-color: rgba(213,179,132,.3); color: var(--gold-200); border-radius: 999px; padding: 0 16px; }
 .dresa-portal [data-gp-letter]:focus-visible { outline-color: var(--violet-300); }
 .dresa-portal [data-gp-content] { padding: 6rem clamp(1.25rem, 6cqw, 6rem) 7rem; font-family: var(--font-sans); }

@@ -169,7 +169,7 @@ export function VoiceAgent() {
         onClick={start}
         aria-label="Hablar con DRESA por voz"
         className={cn(
-          "group fixed right-[4.75rem] z-[60] flex h-14 items-center gap-3 rounded-full border border-gold-300/50 py-0 pl-1.5 pr-5 shadow-[0_18px_50px_-12px_rgba(149,88,202,.7)] transition-all duration-500 ease-lux hover:-translate-y-0.5 active:scale-[.97] sm:right-[5.5rem]",
+          "group fixed right-4 z-[60] flex h-14 items-center gap-3 rounded-full border border-gold-300/50 py-0 pl-1.5 max-sm:w-14 max-sm:justify-center max-sm:px-0 sm:pr-5 shadow-[0_18px_50px_-12px_rgba(149,88,202,.7)] transition-all duration-500 ease-lux hover:-translate-y-0.5 active:scale-[.97] sm:right-[5.5rem]",
           "bg-[linear-gradient(110deg,#f1dcb2,#cfa971_50%,#b8946a)] text-[#1a1008]",
           open && "pointer-events-none translate-y-4 opacity-0",
         )}
@@ -179,7 +179,7 @@ export function VoiceAgent() {
           <span aria-hidden className="absolute inset-0 rounded-full border border-violet-400/70" style={{ animation: "pulse-ring 2.4s ease-out infinite" }} />
           <PhoneCall className="size-5" strokeWidth={1.4} />
         </span>
-        <span className="text-[.72rem] font-medium uppercase tracking-[.18em]">Hablá con DRESA</span>
+        <span className="hidden text-[.72rem] font-medium uppercase tracking-[.18em] sm:inline">Hablá con DRESA</span>
       </button>
 
       {open && (
